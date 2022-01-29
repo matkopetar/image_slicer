@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request
+from flask import Flask, request, send_from_directory, jsonify
 from utils import slice_image
 from constants import IMAGES_DIR_PATH
 
@@ -10,9 +10,13 @@ app = Flask(__name__)
 def upload_and_slice_image():
     image = request.files.get('image')
     image.save(os.path.join(IMAGES_DIR_PATH, image.filename))
-    slice_image(image.filename, 10)
 
-    return 'Image is sliced.'
+    return jsonify(slice_image(image.filename, 10))
+
+
+@app.route('/images/<filename>')
+def _static(filename):
+    return send_from_directory(IMAGES_DIR_PATH, filename)
 
 
 if __name__ == "__main__":
