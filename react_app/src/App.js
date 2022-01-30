@@ -8,6 +8,16 @@ const API_URL = "http://localhost:5000";
 
 
 function App() {
+  const styles = {
+    app: {
+      margin: 'auto',
+      width: 'max-content',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }
+  };
+
   const [gridImage, setGridImage] = useState([]);
   const [gridSize, setGridSize] = useState(10);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -46,7 +56,7 @@ function App() {
   
 
   return (
-    <div>
+    <div style={styles.app}>
       <Form
         gridSize={gridSize}
         onGridSizeInput={onGridSizeInput}
@@ -54,6 +64,7 @@ function App() {
         onSelectedImageInput={onSelectedImageInput}
         onSubmit={onSubmit}
       />
+      <br/>
       {
         (selectedImage || gridImage.length > 0) && <Image image={selectedImage} splittedImages={gridImage} />
       }

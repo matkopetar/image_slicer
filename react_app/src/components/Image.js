@@ -4,7 +4,7 @@ function Image({ image, splittedImages }) {
     const milliseconds = Date.now();
     const styles = {
         splittedImagesStyle: {
-            width: 'minContent',
+            width: 'min-content',
             display: 'grid',
             gridTemplateColumns: `repeat(${splittedImages.length}, auto)`,
             gap: '5px'
