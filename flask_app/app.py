@@ -1,9 +1,11 @@
 import os
 from flask import Flask, request, send_from_directory, jsonify
+from flask_cors import CORS
 from utils import slice_image
 from constants import IMAGES_DIR_PATH
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/upload', methods=['POST', ])
