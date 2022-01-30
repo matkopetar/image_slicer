@@ -14,6 +14,7 @@ function App() {
 
   const onSelectedImageInput = event => {
     setSelectedImage(event.target.files[0]);
+    setGridImage([]);
   };
 
   const onGridSizeInput = event => {

@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Image({ image, splittedImages }) {
+    const milliseconds = Date.now();
     const styles = {
         splittedImagesStyle: {
             width: 'minContent',
@@ -14,7 +15,7 @@ function Image({ image, splittedImages }) {
         splittedImages.length ?
             <div style={styles.splittedImagesStyle}>
                 { splittedImages.map(row => {
-                    return row.map(image => <img src={image}/>)
+                    return row.map(image => <img src={image + '?' + milliseconds.toString()}/>)
                 }) }
             </div> :
             <div className='image'> <img src={URL.createObjectURL(image)}/></div>
