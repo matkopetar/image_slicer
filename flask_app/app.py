@@ -14,9 +14,10 @@ if not os.path.exists(IMAGES_DIR_PATH):
 @app.route('/upload', methods=['POST', ])
 def upload_and_slice_image():
     image = request.files.get('image')
+    grid_size = int(request.form.get('grid_size', 10))
     image.save(os.path.join(IMAGES_DIR_PATH, image.filename))
 
-    return jsonify(slice_image(image.filename, 10))
+    return jsonify(slice_image(image.filename, grid_size))
 
 
 @app.route('/images/<filename>')
