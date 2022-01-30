@@ -1,10 +1,10 @@
 version: "3"
 
 services:
-  web:
+  flask:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: flask_app/Dockerfile
     volumes:
       - ".:/app"
     ports:
