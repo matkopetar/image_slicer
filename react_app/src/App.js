@@ -1,77 +1,62 @@
 import axios from 'axios';
-import './App.css';
 
 import React, {useState} from 'react';
+import Image from './components/Image';
+import Form from './components/Form';
 
 const API_URL = "http://localhost:5000";
 
 
 function App() {
-  const [selectedFile, setSelectedFile] = useState(null);
   const [gridImage, setGridImage] = useState([]);
+  const [gridSize, setGridSize] = useState(10);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const onFileChange = event => {
-    setSelectedFile(event.target.files[0]);
+  const onSelectedImageInput = event => {
+    setSelectedImage(event.target.files[0]);
   };
-  
-  const onFileUpload = () => {
+
+  const onGridSizeInput = event => {
+    setGridSize(event.target.value);
+  }
+
+  const onSubmit = (event) => {
+    event.preventDefault();
     const formData = new FormData();
-  
+
     formData.append(
       "image",
-      selectedFile,
-      selectedFile.name
+      selectedImage,
+      selectedImage.name
+    );
+
+    formData.append(
+      "grid_size",
+      gridSize
     );
   
   
     axios.post(`${API_URL}/upload`, formData)
       .then(response => {
-        console.log(response);
         setGridImage(response.data);
       });
   };
+
   
-  const fileData = () => {
-    if (selectedFile) {
-      return (
-        <div>
-          <h2>File Details:</h2>
-            <p>File Name: {selectedFile.name}</p>                       
-            <p>File Type: {selectedFile.type}</p>
-            <p>
-              Last Modified:{" "}
-              {selectedFile.lastModifiedDate.toDateString()}
-            </p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <br />
-          <h4>Choose before Pressing the Upload button</h4>
-        </div>
-      );
-    }
-  };
 
   return (
     <div>
-        <h3>
-          Upload an image!
-        </h3>
-        <div>
-            <input type="file" onChange={onFileChange} />
-            <button onClick={onFileUpload}>
-              Upload!
-            </button>
-        </div>
-      {fileData()}
-      <div className="grid-image">
-        {gridImage.map(row => {
-          return row.map(image => <div> <img src={image}/></div>)
-        })
-        }
-      </div>
+      <Form
+        gridSize={gridSize}
+        onGridSizeInput={onGridSizeInput}
+        selectedImage={selectedImage}
+        onSelectedImageInput={onSelectedImageInput}
+        onSubmit={onSubmit}
+      />
+      {
+        (selectedImage || gridImage.length > 0) && <Image image={selectedImage} splittedImages={gridImage} />
+      }
+      
     </div>
   );
 };
