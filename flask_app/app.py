@@ -7,6 +7,9 @@ from constants import IMAGES_DIR_PATH
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+if not os.path.exists(IMAGES_DIR_PATH):
+    os.makedirs(IMAGES_DIR_PATH)
+
 
 @app.route('/upload', methods=['POST', ])
 def upload_and_slice_image():
